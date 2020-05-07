@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Effect, ofType, Actions } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
-import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, catchError } from 'rxjs/operators';
 
 import { IAppState } from '../state/app.state';
 import {
@@ -15,6 +15,7 @@ import {
 import { UserService } from '../../services/user.service';
 import { IUserHttp } from '../../models/http-models/user-http.interface';
 import { selectUserList } from '../selectors/user.selector';
+import { ResultFailed } from '../actions/result.actions';
 
 @Injectable()
 export class UserEffects {
@@ -26,7 +27,8 @@ export class UserEffects {
     switchMap(([id, users]) => {
       const selectedUser = users.filter(user => user.id === +id)[0];
       return of(new GetUserSuccess(selectedUser));
-    })
+    }),
+    catchError(err => of(new ResultFailed()))
   );
 
   @Effect()

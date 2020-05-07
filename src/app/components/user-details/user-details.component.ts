@@ -8,8 +8,8 @@ import { IUser } from '../../models/user.interface';
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnInit {
-  @Input()
-  user: IUser;
+  @Input() user: IUser;
+  @Input() error: string;
 
   constructor() {}
 

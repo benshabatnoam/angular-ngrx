@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IAppState } from '../../store/state/app.state';
 import { selectSelectedUser } from '../../store/selectors/user.selector';
 import { GetUser } from '../../store/actions/user.actions';
+import { selectGetError } from 'src/app/store/selectors/result.selector';
 
 @Component({
   templateUrl: './user.component.html',
@@ -12,6 +13,7 @@ import { GetUser } from '../../store/actions/user.actions';
 })
 export class UserComponent implements OnInit {
   user$ = this._store.pipe(select(selectSelectedUser));
+  error$ = this._store.pipe(select(selectGetError));
 
   constructor(
     private _store: Store<IAppState>,
